@@ -2,7 +2,7 @@ var year = new Date().getFullYear();
 export default function Footer() {
     return (
         <footer>
-            <p>© {year} Keeper App</p>
+            <p>© {year} Notes App</p>
         </footer>
     );
 }
