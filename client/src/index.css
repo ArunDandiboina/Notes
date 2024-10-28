@@ -114,14 +114,15 @@ form.create-note button {
   outline: none;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 600px) {
   form.create-note {
-    width: 70%;
+    width: 80%; /* Change to 90% for smaller screens */
   }
 }
 
-@media (min-width: 1024px) {
+/* Optional: Add a media query for very small screens */
+@media (max-width: 400px) {
   form.create-note {
-    width: 50%;
+    width: 75%; /* Change to 95% for very small screens */
   }
 }
