@@ -6,7 +6,7 @@
         "server": "npm run dev --prefix server",
         "dev": "concurrently \"npm run server\" \"npm run client\"",
         "build": "npm run build --prefix client",
-        "start": "node server/server.js"
+        "start": "node server/index.js"
     },
     "devDependencies": {
         "concurrently": "^8.2.2"
