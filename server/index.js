@@ -38,6 +38,21 @@ const db = new pg.Client({
 });
 db.connect();
 
+// Database schema
+const createNotesTable = async () => {
+  const createTableQuery = `
+      CREATE TABLE IF NOT EXISTS notes (
+          id SERIAL PRIMARY KEY,
+          title TEXT,
+          content TEXT
+      );
+  `;
+  await db.query(createTableQuery);
+};
+
+// Call the function to create the table
+createNotesTable().catch(err => console.error('Error creating table:', err));
+
 // Before Login
 let items = [];
 
