@@ -4,10 +4,15 @@ import bodyParser from "body-parser";
 import pg from "pg";
 import env from "dotenv";
 import path from "path";
+import { fileURLToPath } from "url";
+
 
 
 // Load environment variables from .env file
 env.config();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // consts
 const app = express();
@@ -16,6 +21,8 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, '../client/build')));
+
 
 // Database connection
 const db = new pg.Client({
@@ -65,12 +72,8 @@ app.delete('/api/notes/:id', async(req, res) => {
   }
 });
 
-// Serve static files from the React app
-app.use(express.static(path.join(__dirname, 'client/build')));
-
-// Handle GET requests to any route, send back the React app
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
 
 // Start server
