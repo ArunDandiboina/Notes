@@ -62,7 +62,7 @@ export default function App() {
                     />
                 ))}
             </div>
-            <p> </p>
+            <p className="gap"> </p>
             <Footer />
         </div>
     );

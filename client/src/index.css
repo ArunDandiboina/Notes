@@ -114,6 +114,10 @@ form.create-note button {
   outline: none;
 }
 
+.gap {
+  margin-bottom: 20px;
+}
+
 @media (max-width: 600px) {
   form.create-note {
     width: 80%; /* Change to 90% for smaller screens */
