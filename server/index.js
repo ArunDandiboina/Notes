@@ -4,6 +4,8 @@ import bodyParser from "body-parser";
 import pg from "pg";
 import env from "dotenv";
 import path from "path";
+import cors from "cors";
+
 import { fileURLToPath } from "url";
 
 
@@ -21,8 +23,8 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, '../client')));
 app.use(express.static(path.join(__dirname, '../client/dist')));
+app.use(cors());
 
 
 
