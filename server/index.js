@@ -3,6 +3,8 @@ import express from "express";
 import bodyParser from "body-parser";
 import pg from "pg";
 import env from "dotenv";
+import path from "path";
+
 
 // Load environment variables from .env file
 env.config();
@@ -61,6 +63,14 @@ app.delete('/api/notes/:id', async(req, res) => {
     console.log(err); 
     res.status(404).json({ error: "Note not found" }); // Not found if id is invalid
   }
+});
+
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, 'client/build')));
+
+// Handle GET requests to any route, send back the React app
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 });
 
 // Start server
