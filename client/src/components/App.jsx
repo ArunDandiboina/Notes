@@ -1,69 +1,39 @@
 // imports
 import React, { useEffect, useState } from "react";
-import Header from "./Header";
-import Footer from "./Footer";
-import Note from "./Note";
-import CreateArea from "./CreateArea";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import axios from "axios";
+import Header from "./Header";
+import SignUp from "./SignUp";
+import Notes from "./Notes";
+import Login from "./Login";
+
+
 
 export default function App() {
-    const [notes, setNotes] = useState([]);
+  // const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    useEffect(() => {
-        const fetchNotes = async () => {
-            try {
-                const response = await axios.get("/api");
-                console.log(response.data);
-                setNotes(response.data); // Populate notes with data from the database
-            } catch (error) {
-                console.error("Error fetching notes:", error);
-            }
-        };
-
-        fetchNotes();
-    }, []);
-
-    async function addNewNote(newNote) {
-        try {
-            // Send POST request to backend to add the new note
-            const response = await axios.post('/api/notes', newNote);
-            console.log("Response after adding new note:", response.data);
-            // Update state only if the POST request is successful
-            setNotes((prevNotes) => [...prevNotes, response.data]);
-        } catch (error) {
-            console.error("Error adding new note:", error);
-        }
-    }
-
-    const deleteNote = async (id) => {
-        try {
-            // Send DELETE request to backend with the unique note id
-            await axios.delete(`/api/notes/${id}`);
-
-            // Update state to remove the deleted note by id
-            setNotes((prevNotes) => prevNotes.filter((note) => note.id !== id));
-        } catch (error) {
-            console.error("Error deleting note:", error);
-        }
-    };
-
+  // useEffect(() => {
+  //   // Check authentication status on load
+  //   const checkAuthStatus = async () => {
+  //     try {
+  //       const response = await axios.get("/api/auth/check");
+  //       console.log(response.data.auth);
+  //       setIsAuthenticated(parseInt(response.data.auth) == 200);
+  //       console.log(isAuthenticated);
+  //     } catch (error) {
+  //       setIsAuthenticated(false);
+  //     }
+  //   };
+  //   checkAuthStatus();
+  // }, []);
     return (
-        <div>
-            <Header />
-            <CreateArea onAdd={addNewNote} />
-            <div className="main-content">
-                {notes.map((note, index) => (
-                    <Note
-                        id={note.id}
-                        key={note.id}
-                        title={note.title}
-                        content={note.content}
-                        onDelete={deleteNote}
-                    />
-                ))}
-            </div>
-            <p className="gap"> </p>
-            <Footer />
-        </div>
+        <Router>
+        <Routes>
+          <Route path="/SignUp" element={<SignUp />} />
+          <Route path="/LogIn" element={<Login />} />
+          <Route path="/" element={<Notes /> }/>
+        </Routes>
+      </Router>
+       
     );
 } 
