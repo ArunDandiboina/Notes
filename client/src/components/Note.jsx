@@ -24,6 +24,15 @@ function Note({ id, title, content, onDelete, onUpdate }) {
         };
     }, [isEditing, editedNote]);
 
+    // Focus and place cursor at the end of content when editing starts
+    useEffect(() => {
+        if (isEditing && contentRef.current) {
+            contentRef.current.focus();
+            const end = contentRef.current.value.length;
+            contentRef.current.setSelectionRange(end, end); // Move cursor to end
+        }
+    }, [isEditing]);
+
     // Adjust textarea height to fit content
     const adjustTextareaHeight = () => {
         if (contentRef.current) {
@@ -110,4 +119,3 @@ function Note({ id, title, content, onDelete, onUpdate }) {
 }
 
 export default Note;
- 
