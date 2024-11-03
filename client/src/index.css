@@ -82,9 +82,6 @@ header {
 
 /* Responsive styles */
 @media (max-width: 600px) {
-  .logout{
-    padding: 5px 10px;
-  }
   .nav {
       display: none;
       flex-direction: column;
@@ -101,7 +98,13 @@ header {
 
   .nav-button{
     padding: 5px 10px;
-    border-radius: 0;
+    border-radius: 0px;
+    border: none;
+  }
+
+  .nav-button.logout{
+    padding: 15px 30px;
+    border-radius: 5px;
     border: none;
   }
 
@@ -146,6 +149,7 @@ footer p {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
+  align-items: flex-start;
 }
 
 .note {
@@ -179,7 +183,7 @@ form.create-note {
   box-shadow: 0 1px 5px rgb(138, 137, 137);
 }
 form.create-note input,
-form.create-note textarea {
+form.create-note textarea, .note-content-input, .note-title-input {
   width: 100%;
   border: none;
   padding: 4px;
@@ -188,6 +192,22 @@ form.create-note textarea {
   font-family: inherit;
   resize: none;
 }
+
+.note-title-input {
+font-weight: bold;
+font-size: 1.1em;
+padding: 0;
+padding-bottom: 6px;
+}
+.note-content-input {
+  height: auto;
+  overflow: hidden;
+  resize:none;
+  font-size: 1.1em;
+  padding:0;
+  margin-bottom: 6px;
+}
+
 form.create-note button {
   position: absolute;
   right: 18px;

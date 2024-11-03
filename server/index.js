@@ -88,7 +88,7 @@ app.get('/api', async (req, res) => {
   items = [];
   if (req.isAuthenticated()) {
       try {
-          const result = await db.query("SELECT * FROM notes1 WHERE user_id = $1", [req.user.id]);
+          const result = await db.query("SELECT * FROM notes1 WHERE user_id = $1 ORDER BY id ASC", [req.user.id]);
           res.status(200).json(result.rows);
       } catch (error) {
           res.status(500).json({ error: 'Error fetching notes from database' });
@@ -113,6 +113,43 @@ app.post("/api/notes", async (req, res) => {
   }
 });
  
+app.put("/api/notes/:id", async (req, res) => {
+  const { id } = req.params;
+  const { title, content } = req.body;
+
+  if (req.isAuthenticated()) {
+      try {
+          // Update the note in the database for authenticated users
+          const result = await db.query(
+              "UPDATE notes1 SET title = $1, content = $2 WHERE id = $3 AND user_id = $4 RETURNING *",
+              [title, content, id, req.user.id]
+          );
+
+          if (result.rowCount === 0) {
+              return res.status(404).json({ error: "Note not found." });
+          }
+
+          res.status(200).json(result.rows[0]); // Respond with the updated note
+      } catch (error) {
+          console.error("Error updating note in database:", error);
+          res.status(500).json({ error: "Failed to update note." });
+      }
+  } else {
+      // Handle the case for non-authenticated users
+      const noteIndex = items.findIndex(note => note.id === parseInt(id));
+      if (noteIndex === -1) {
+          return res.status(404).json({ error: "Note not found." });
+      }
+      // Update the note in memory
+      items[noteIndex] = { ...items[noteIndex], title, content };
+      // console.log(items);
+      // console.log(title);
+      // console.log(items[noteIndex]);
+
+      res.status(200).json(items[noteIndex]); // Respond with the updated note
+  }
+});
+
 
 app.delete("/api/notes/:id", async (req, res) => {
   const { id } = req.params;

@@ -23,25 +23,32 @@ function CreateArea(props) {
   }
 
   function submitNote(event) {
+    event.preventDefault();
     props.onAdd(note);
     setNote({
       title: "",
       content: ""
     });
-    event.preventDefault();
   }
 
   function expand() {
     setExpanded(true);
   }
 
+  function handleKeyDown(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+    }
+  }
+
   return (
     <div>
-      <form className="create-note">
+      <form className="create-note" onSubmit={submitNote}>
         {isExpanded && (
           <input
             name="title"
             onChange={handleChange}
+            onKeyDown={handleKeyDown}
             value={note.title}
             placeholder="Title"
           />
@@ -56,7 +63,7 @@ function CreateArea(props) {
           rows={isExpanded ? 3 : 1}
         />
         <Zoom in={isExpanded}>
-          <Fab onClick={submitNote}>
+          <Fab type="submit">
             <AddIcon />
           </Fab>
         </Zoom>
