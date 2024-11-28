@@ -53,7 +53,7 @@ export default function Notes() {
                 {notes.map((note, index) => (
                     <Note
                         id={note.id}
-                        key={index}
+                        key={note.id}
                         title={note.title}
                         content={note.content}
                         onDelete={deleteNote}
