@@ -54,6 +54,7 @@ const db = new pg.Client({
 });
 db.connect();
 
+
 // Database schema
 // Database schema for users and notes
 const createTables = async () => {
