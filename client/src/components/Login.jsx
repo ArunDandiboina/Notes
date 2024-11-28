@@ -73,8 +73,6 @@ export default function Login() {
                     <button type="submit" className="login-button">Login</button>
                 </form>
             </div>
-            <p className="gap"> </p>
-
             <Footer />
         </div>
     );

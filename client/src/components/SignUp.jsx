@@ -68,7 +68,6 @@ export default function Signup() {
                     <button type="submit" className="signup-button">Sign Up</button>
                 </form>
             </div>
-            <p className="gap"> </p>
             <Footer />
         </div>
     );
